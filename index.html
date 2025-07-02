@@ -41,6 +41,17 @@
         .note-text { font-size: 11px; font-weight: 300; font-style: italic; } /* light, italic */
         .question-text { font-weight: 700; } /* bold */
 
+        /* Instruction list styling */
+        .instruction-list li {
+            font-size: 12px;
+            line-height: 1.7; /* Approx 30% increase */
+        }
+        @media (max-width: 640px) {
+            .instruction-list li {
+                font-size: 11px;
+            }
+        }
+
         /* Input field focus highlight */
         .form-input:focus, .form-select:focus {
             outline: none;
@@ -110,16 +121,19 @@
 
     <div id="app-container" class="w-full bg-white">
         <div class="p-6 md:p-8 max-w-4xl mx-auto w-full flex flex-col justify-center min-h-full">
+            <!-- Header -->
             <div class="text-center mb-6">
                 <h1 class="text-lg md:text-xl font-bold primary-accent-text">CAD Readiness Test</h1>
                 <p class="text-gray-500 mt-1 text-sm">An advanced assessment for final-year students.</p>
             </div>
 
+            <!-- Progress Bar -->
             <div id="progress-bar-container" class="w-full bg-gray-200 rounded-full h-2.5 mb-6 hidden">
                 <div id="progress-bar" class="primary-accent-bg h-2.5 rounded-full progress-bar-inner" style="width: 0%"></div>
             </div>
 
-            <div id="step1" class="step-transition">
+            <!-- Step 1: User Info -->
+            <div id="step1" class="step-transition fade-in">
                 <div class="text-center mb-6">
                     <h1 class="text-gray-800">Tell us about you</h1>
                     <h2 class="text-gray-600">Enter your details to begin the assessment.</h2>
@@ -132,7 +146,7 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <input type="text" id="collegeName" placeholder="College Name" class="form-input w-full p-3 bg-gray-100 rounded-lg border-2 border-transparent">
-                        <select id="semester" class="form-select w-full p-3 bg-gray-100 rounded-lg border-2 border-transparent text-gray-500">
+                        <select id="semester" class="form-select w-full p-3 bg-gray-100 rounded-lg border-2 border-transparent text-gray-500 appearance-none">
                             <option value="" disabled selected>Select Semester</option>
                             <option value="1st-2nd">1st-2nd</option>
                             <option value="3rd-4th">3rd-4th</option>
@@ -140,7 +154,15 @@
                             <option value="7th-8th">7th-8th</option>
                             <option value="Masters">Masters</option>
                         </select>
-                        <input type="text" id="stream" placeholder="Stream (e.g., Mechanical)" class="form-input w-full p-3 bg-gray-100 rounded-lg border-2 border-transparent">
+                        <select id="stream" class="form-select w-full p-3 bg-gray-100 rounded-lg border-2 border-transparent text-gray-500 appearance-none">
+                            <option value="" disabled selected>Select Stream</option>
+                            <option value="Civil">Civil</option>
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Architectural">Architectural</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Industrial Design">Industrial Design</option>
+                            <option value="Interior Design">Interior Design</option>
+                        </select>
                     </div>
                 </div>
                 <div class="bg-red-50 p-4 rounded-lg text-center mb-6">
@@ -161,20 +183,21 @@
                  </div>
             </div>
 
+            <!-- NEW Step: Instructions -->
             <div id="step-instructions" class="hidden step-transition">
                 <div class="text-center mb-6">
                     <h1 class="text-gray-800">Test Instructions</h1>
                     <h2 class="text-gray-600">Please read the following carefully before you begin.</h2>
                 </div>
                 <div class="text-left max-w-2xl mx-auto bg-gray-50 p-6 rounded-lg">
-                    <ol class="list-decimal list-inside space-y-3">
+                    <ol class="list-decimal list-inside space-y-3 instruction-list">
                         <li>This test consists of 15 questions randomly selected from a large bank. All questions are new for each attempt.</li>
-                        <li>You will have **40 seconds** to answer each question. If the timer runs out, the test will automatically move to the next question.</li>
+                        <li>You will have <b>40 seconds</b> to answer each question. If the timer runs out, the test will automatically move to the next question.</li>
                         <li>The questions are designed to test your fundamental and practical understanding of industrial CAD applications.</li>
                         <li>Upon completion, you will be awarded a personalized, downloadable certificate with your score.</li>
                         <li>A full review of your answers, along with the correct answers, will be displayed at the end of the test.</li>
                         <li>You can validate any certificate using the validation button (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill inline-block" viewBox="0 0 16 16"><path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/></svg>) on the home screen.</li>
-                        <li>There is **no negative marking**, so we encourage you to attempt every question.</li>
+                        <li>There is <b>no negative marking</b>, so we encourage you to attempt every question.</li>
                         <li>Please ensure you have a stable internet connection for a smooth and uninterrupted test experience.</li>
                         <li>This is an assessment of your individual skill. Please answer honestly and without any external help. Good luck!</li>
                     </ol>
@@ -186,6 +209,7 @@
                 </div>
             </div>
 
+            <!-- Step 2: The Quiz -->
             <div id="step2" class="hidden step-transition">
                  <div id="quiz-container" class="flex flex-col justify-between">
                     <div>
@@ -203,6 +227,7 @@
                 </div>
             </div>
 
+            <!-- Step 3: Results -->
             <div id="step3" class="hidden step-transition text-center">
                 <h1 class="text-gray-800">Test Complete!</h1>
                 <h2 class="text-gray-600 mb-4">Here is your result.</h2>
@@ -215,6 +240,7 @@
                 
                 <hr class="my-8">
 
+                <!-- Full Quiz Review -->
                 <div id="review-section" class="hidden mt-8 text-left">
                     <h1 class="text-gray-800 text-center">Full Quiz Review</h1>
                     <h2 class="text-gray-600 text-center mb-4">Review your answers below.</h2>
@@ -224,6 +250,7 @@
         </div>
     </div>
     
+    <!-- Certificate Validator Modal -->
     <div id="validator-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-center">
             <h1 class="text-gray-800 mb-2">Validate Certificate</h1>
@@ -237,6 +264,7 @@
         </div>
     </div>
 
+    <!-- Certificate Template (Hidden) -->
     <div id="certificate-template" class="hidden absolute -left-full">
         <div style="width: 800px; height: 565px; border: 10px solid #7A2532; padding: 20px; background-color: white; font-family: 'Montserrat', sans-serif; position: relative; box-sizing: border-box;">
             <div style="border: 2px solid #7A2532; width: 100%; height: 100%; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box;">
@@ -377,16 +405,35 @@
                     from.classList.remove('fade-out');
                     to.classList.remove('hidden');
                     to.classList.add('fade-in');
+                    to.classList.remove('fade-out'); // Ensure fade-in is not overridden
                 }, 300);
             }
 
-            function showInstructions() {
-                 if (!fullNameInput.value || !emailInput.value || !phoneInput.value || !collegeNameInput.value || !semesterInput.value || !streamInput.value) {
+            function validateForm() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const phoneRegex = /^[6-9]\d{9}$/;
+
+                if (!fullNameInput.value || !emailInput.value || !phoneInput.value || !collegeNameInput.value || !semesterInput.value || !streamInput.value) {
                     errorMessageEl.textContent = "Please fill out all fields.";
                     errorContainer.classList.remove('hidden');
-                    return;
+                    return false;
+                }
+                if (!emailRegex.test(emailInput.value)) {
+                    errorMessageEl.textContent = "Please enter a valid email address.";
+                    errorContainer.classList.remove('hidden');
+                    return false;
+                }
+                 if (!phoneRegex.test(phoneInput.value)) {
+                    errorMessageEl.textContent = "Please enter a valid 10-digit Indian phone number.";
+                    errorContainer.classList.remove('hidden');
+                    return false;
                 }
                 errorContainer.classList.add('hidden');
+                return true;
+            }
+
+            function showInstructions() {
+                 if (!validateForm()) return;
                 
                 userData = { 
                     name: fullNameInput.value, email: emailInput.value, phone: phoneInput.value, 
@@ -429,9 +476,6 @@
                     });
                     nextQuestionBtn.textContent = currentQuestionIndex === quizQuestions.length - 1 ? 'Finish Test' : 'Next';
                     startTimer();
-                } else {
-                    transitionToStep(step2, step3);
-                    showResults();
                 }
             }
             
@@ -441,8 +485,8 @@
                 timerEl.classList.remove('text-red-500');
                 timerInterval = setInterval(() => {
                     timeLeft--;
-                    timerEl.textContent = `00:${timeLeft.toString().padStart(2, '0')}`;
-                    if (timeLeft < 6) timerEl.classList.add('text-red-500');
+                    timerEl.textContent = `00:${String(timeLeft).padStart(2, '0')}`;
+                    if (timeLeft < 10) timerEl.classList.add('text-red-500');
                     if (timeLeft <= 0) {
                         clearInterval(timerInterval);
                         handleNextQuestion(false);
