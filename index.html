@@ -76,9 +76,17 @@
             overflow-y: auto;
         }
 
-        /* Animation for fading questions in and out */
-        .fade-out { opacity: 0; transition: opacity 0.3s ease-out; }
-        .fade-in { opacity: 1; transition: opacity 0.3s ease-in; }
+        /* Animation for fading steps in and out */
+        .step-transition {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+        .fade-in {
+            opacity: 1;
+        }
 
         /* Simple spinner for loading state */
         .spinner {
@@ -102,19 +110,16 @@
 
     <div id="app-container" class="w-full bg-white">
         <div class="p-6 md:p-8 max-w-4xl mx-auto w-full flex flex-col justify-center min-h-full">
-            <!-- Header -->
             <div class="text-center mb-6">
                 <h1 class="text-lg md:text-xl font-bold primary-accent-text">CAD Readiness Test</h1>
                 <p class="text-gray-500 mt-1 text-sm">An advanced assessment for final-year students.</p>
             </div>
 
-            <!-- Progress Bar -->
             <div id="progress-bar-container" class="w-full bg-gray-200 rounded-full h-2.5 mb-6 hidden">
                 <div id="progress-bar" class="primary-accent-bg h-2.5 rounded-full progress-bar-inner" style="width: 0%"></div>
             </div>
 
-            <!-- Step 1: User Info -->
-            <div id="step1">
+            <div id="step1" class="step-transition">
                 <div class="text-center mb-6">
                     <h1 class="text-gray-800">Tell us about you</h1>
                     <h2 class="text-gray-600">Enter your details to begin the assessment.</h2>
@@ -142,8 +147,8 @@
                     <p class="note-text text-red-800"><span class="font-bold">Please Note:</span> This information will be used for your certificate and to contact you for placement opportunities. Ensure all details are accurate. A score above 85% makes you eligible.</p>
                 </div>
                 <div class="text-center flex items-center justify-center space-x-4">
-                    <button id="start-quiz-btn" class="primary-accent-bg text-white font-bold py-3 px-8 rounded-lg shadow-md hover:opacity-90 transition-opacity flex items-center justify-center">
-                        Start Quiz
+                    <button id="show-instructions-btn" class="primary-accent-bg text-white font-bold py-3 px-8 rounded-lg shadow-md hover:opacity-90 transition-opacity flex items-center justify-center">
+                        Next
                     </button>
                     <button id="open-validator-btn" class="p-3 bg-gray-200 rounded-full shadow-md hover:bg-gray-300 transition-colors" title="Validate Certificate">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-patch-check-fill text-gray-700" viewBox="0 0 16 16">
@@ -156,9 +161,33 @@
                  </div>
             </div>
 
-            <!-- Step 2: The Quiz -->
-            <div id="step2" class="hidden">
-                 <div id="quiz-container" class="flex flex-col justify-between transition-opacity duration-300">
+            <div id="step-instructions" class="hidden step-transition">
+                <div class="text-center mb-6">
+                    <h1 class="text-gray-800">Test Instructions</h1>
+                    <h2 class="text-gray-600">Please read the following carefully before you begin.</h2>
+                </div>
+                <div class="text-left max-w-2xl mx-auto bg-gray-50 p-6 rounded-lg">
+                    <ol class="list-decimal list-inside space-y-3">
+                        <li>This test consists of 15 questions randomly selected from a large bank. All questions are new for each attempt.</li>
+                        <li>You will have **40 seconds** to answer each question. If the timer runs out, the test will automatically move to the next question.</li>
+                        <li>The questions are designed to test your fundamental and practical understanding of industrial CAD applications.</li>
+                        <li>Upon completion, you will be awarded a personalized, downloadable certificate with your score.</li>
+                        <li>A full review of your answers, along with the correct answers, will be displayed at the end of the test.</li>
+                        <li>You can validate any certificate using the validation button (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill inline-block" viewBox="0 0 16 16"><path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/></svg>) on the home screen.</li>
+                        <li>There is **no negative marking**, so we encourage you to attempt every question.</li>
+                        <li>Please ensure you have a stable internet connection for a smooth and uninterrupted test experience.</li>
+                        <li>This is an assessment of your individual skill. Please answer honestly and without any external help. Good luck!</li>
+                    </ol>
+                </div>
+                 <div class="text-center mt-8">
+                    <button id="start-quiz-btn" class="primary-accent-bg text-white font-bold py-3 px-8 rounded-lg shadow-md hover:opacity-90 transition-opacity flex items-center justify-center mx-auto">
+                        Begin Test
+                    </button>
+                </div>
+            </div>
+
+            <div id="step2" class="hidden step-transition">
+                 <div id="quiz-container" class="flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="text-gray-600">Question <span id="question-number">1</span>/15</h2>
@@ -166,8 +195,7 @@
                         </div>
                         <p id="question-text" class="question-text text-base md:text-lg text-gray-900 mb-6">Question text goes here...</p>
                         <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Answer options will be dynamically inserted here -->
-                        </div>
+                            </div>
                     </div>
                     <div class="text-center mt-8">
                         <button id="next-question-btn" class="primary-accent-bg text-white font-bold py-3 px-12 rounded-lg shadow-md hover:opacity-90 transition-opacity">Next</button>
@@ -175,8 +203,7 @@
                 </div>
             </div>
 
-            <!-- Step 3: Results -->
-            <div id="step3" class="hidden text-center">
+            <div id="step3" class="hidden step-transition text-center">
                 <h1 class="text-gray-800">Test Complete!</h1>
                 <h2 class="text-gray-600 mb-4">Here is your result.</h2>
                 <div class="my-8">
@@ -188,7 +215,6 @@
                 
                 <hr class="my-8">
 
-                <!-- Full Quiz Review -->
                 <div id="review-section" class="hidden mt-8 text-left">
                     <h1 class="text-gray-800 text-center">Full Quiz Review</h1>
                     <h2 class="text-gray-600 text-center mb-4">Review your answers below.</h2>
@@ -198,7 +224,6 @@
         </div>
     </div>
     
-    <!-- Certificate Validator Modal -->
     <div id="validator-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-center">
             <h1 class="text-gray-800 mb-2">Validate Certificate</h1>
@@ -212,7 +237,6 @@
         </div>
     </div>
 
-    <!-- Certificate Template (Hidden) -->
     <div id="certificate-template" class="hidden absolute -left-full">
         <div style="width: 800px; height: 565px; border: 10px solid #7A2532; padding: 20px; background-color: white; font-family: 'Montserrat', sans-serif; position: relative; box-sizing: border-box;">
             <div style="border: 2px solid #7A2532; width: 100%; height: 100%; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box;">
@@ -237,9 +261,11 @@
             const progressBarContainer = document.getElementById('progress-bar-container');
             const progressBar = document.getElementById('progress-bar');
             const step1 = document.getElementById('step1');
+            const stepInstructions = document.getElementById('step-instructions');
             const step2 = document.getElementById('step2');
             const step3 = document.getElementById('step3');
             const quizContainer = document.getElementById('quiz-container');
+            const showInstructionsBtn = document.getElementById('show-instructions-btn');
             const startQuizBtn = document.getElementById('start-quiz-btn');
             const nextQuestionBtn = document.getElementById('next-question-btn');
             const downloadCertBtn = document.getElementById('download-cert-btn');
@@ -269,7 +295,7 @@
             // --- QUIZ DATA & STATE ---
             let quizQuestions = [];
             const questionBank = [
-                // 55+ Industry-focused and fundamental CAD questions
+                 // 55+ Industry-focused and fundamental CAD questions
                 // --- Fundamental Questions (Approx 30%) ---
                 { question: "In 3D modeling, what is the primary function of the 'Extrude' command?", options: ["To create a hole through a part.", "To add material by projecting a 2D sketch along a straight line.", "To create a rounded edge on a corner.", "To revolve a sketch around an axis."], answer: 1 },
                 { question: "What is the main purpose of a 'Fillet' feature?", options: ["To create a sharp, angled corner.", "To create a rounded internal or external corner on a part.", "To remove material from a solid body.", "To create a threaded hole."], answer: 1 },
@@ -333,11 +359,6 @@
             
             document.addEventListener('contextmenu', event => event.preventDefault());
 
-            function initializeQuiz() {
-                // No AI call, instant setup
-                console.log("Using standard question bank.");
-            }
-
             function getFinalQuestions() {
                 const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
                 return shuffled.slice(0, 15);
@@ -349,27 +370,41 @@
                 return `CAD-${timestamp}-${randomPart}`;
             }
 
-            function startQuiz() {
-                if (!fullNameInput.value || !emailInput.value || !phoneInput.value || !collegeNameInput.value || !semesterInput.value || !streamInput.value) {
+            function transitionToStep(from, to) {
+                from.classList.add('fade-out');
+                setTimeout(() => {
+                    from.classList.add('hidden');
+                    from.classList.remove('fade-out');
+                    to.classList.remove('hidden');
+                    to.classList.add('fade-in');
+                }, 300);
+            }
+
+            function showInstructions() {
+                 if (!fullNameInput.value || !emailInput.value || !phoneInput.value || !collegeNameInput.value || !semesterInput.value || !streamInput.value) {
                     errorMessageEl.textContent = "Please fill out all fields.";
                     errorContainer.classList.remove('hidden');
                     return;
                 }
                 errorContainer.classList.add('hidden');
                 
-                quizQuestions = getFinalQuestions();
-
                 userData = { 
                     name: fullNameInput.value, email: emailInput.value, phone: phoneInput.value, 
                     college: collegeNameInput.value, year: semesterInput.value, stream: streamInput.value,
                     certificateNumber: generateCertificateNumber() 
                 };
 
-                step1.classList.add('hidden');
+                transitionToStep(step1, stepInstructions);
+            }
+
+            function startQuiz() {
+                quizQuestions = getFinalQuestions();
+
                 progressBarContainer.classList.remove('hidden');
-                step2.classList.remove('hidden');
                 const progress = ((currentQuestionIndex) / quizQuestions.length) * 100;
                 progressBar.style.width = `${progress}%`;
+                
+                transitionToStep(stepInstructions, step2);
                 loadQuestion();
             }
 
@@ -395,6 +430,7 @@
                     nextQuestionBtn.textContent = currentQuestionIndex === quizQuestions.length - 1 ? 'Finish Test' : 'Next';
                     startTimer();
                 } else {
+                    transitionToStep(step2, step3);
                     showResults();
                 }
             }
@@ -435,22 +471,23 @@
                 userAnswers.push(selectedAnswerIndex);
                 
                 currentQuestionIndex++;
-                quizContainer.classList.add('fade-out');
-                quizContainer.classList.remove('fade-in');
-                const progress = ((currentQuestionIndex) / quizQuestions.length) * 100;
-                progressBar.style.width = `${progress}%`;
                 
+                quizContainer.classList.add('fade-out');
                 setTimeout(() => {
-                    if (currentQuestionIndex < quizQuestions.length) loadQuestion();
-                    else showResults();
+                    if (currentQuestionIndex < quizQuestions.length) {
+                        const progress = ((currentQuestionIndex) / quizQuestions.length) * 100;
+                        progressBar.style.width = `${progress}%`;
+                        loadQuestion();
+                    }
+                    else {
+                        progressBar.style.width = '100%';
+                        transitionToStep(step2, step3);
+                        showResults();
+                    }
                 }, 300);
             }
 
             function showResults() {
-                step2.classList.add('hidden');
-                step3.classList.remove('hidden');
-                step3.classList.add('fade-in');
-                progressBar.style.width = '100%';
                 finalScoreEl.textContent = `${score}/${quizQuestions.length}`;
                 
                 const percentage = (score / quizQuestions.length) * 100;
@@ -571,6 +608,7 @@
             }
 
             // --- EVENT LISTENERS ---
+            showInstructionsBtn.addEventListener('click', showInstructions);
             startQuizBtn.addEventListener('click', startQuiz);
             nextQuestionBtn.addEventListener('click', () => handleNextQuestion(true));
             downloadCertBtn.addEventListener('click', generateCertificate);
@@ -578,8 +616,6 @@
             closeValidatorBtn.addEventListener('click', closeValidator);
             validateCertBtn.addEventListener('click', validateCertificate);
 
-            // --- INITIALIZE ---
-            initializeQuiz();
         });
     </script>
 
