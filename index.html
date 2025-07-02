@@ -44,11 +44,11 @@
         /* Instruction list styling */
         .instruction-list li {
             font-size: 12px;
-            line-height: 1.7; /* Approx 30% increase */
+            line-height: 1.7; /* Increased line spacing */
         }
         @media (max-width: 640px) {
             .instruction-list li {
-                font-size: 11px;
+                font-size: 10px;
             }
         }
 
@@ -211,7 +211,7 @@
 
             <!-- Step 2: The Quiz -->
             <div id="step2" class="hidden step-transition">
-                 <div id="quiz-container" class="flex flex-col justify-between">
+                 <div id="quiz-container" class="flex flex-col justify-between step-transition">
                     <div>
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="text-gray-600">Question <span id="question-number">1</span>/15</h2>
@@ -399,13 +399,17 @@
             }
 
             function transitionToStep(from, to) {
+                from.classList.remove('fade-in');
                 from.classList.add('fade-out');
+                
                 setTimeout(() => {
                     from.classList.add('hidden');
-                    from.classList.remove('fade-out');
                     to.classList.remove('hidden');
-                    to.classList.add('fade-in');
-                    to.classList.remove('fade-out'); // Ensure fade-in is not overridden
+                    
+                    requestAnimationFrame(() => {
+                        to.classList.add('fade-in');
+                    });
+
                 }, 300);
             }
 
