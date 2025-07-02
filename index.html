@@ -37,12 +37,12 @@
         /* Typography - Reduced font sizes */
         h1 { font-size: 16px; font-weight: 700; } /* bold */
         h2 { font-size: 14px; font-weight: 300; } /* light */
-        p, .answer-option, .form-input::placeholder, .form-input { font-size: 13px; font-weight: 300; } /* light */
+        p, .answer-option, .form-input, .form-select { font-size: 13px; font-weight: 300; } /* light */
         .note-text { font-size: 11px; font-weight: 300; font-style: italic; } /* light, italic */
         .question-text { font-weight: 700; } /* bold */
 
         /* Input field focus highlight */
-        .form-input:focus {
+        .form-input:focus, .form-select:focus {
             outline: none;
             box-shadow: 0 0 0 2px rgba(122, 37, 50, 0.4);
             border-color: #7A2532;
@@ -127,7 +127,14 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <input type="text" id="collegeName" placeholder="College Name" class="form-input w-full p-3 bg-gray-100 rounded-lg border-2 border-transparent">
-                        <input type="text" id="year" placeholder="Year (e.g., Final Year)" class="form-input w-full p-3 bg-gray-100 rounded-lg border-2 border-transparent">
+                        <select id="semester" class="form-select w-full p-3 bg-gray-100 rounded-lg border-2 border-transparent text-gray-500">
+                            <option value="" disabled selected>Select Semester</option>
+                            <option value="1st-2nd">1st-2nd</option>
+                            <option value="3rd-4th">3rd-4th</option>
+                            <option value="5th-6th">5th-6th</option>
+                            <option value="7th-8th">7th-8th</option>
+                            <option value="Masters">Masters</option>
+                        </select>
                         <input type="text" id="stream" placeholder="Stream (e.g., Mechanical)" class="form-input w-full p-3 bg-gray-100 rounded-lg border-2 border-transparent">
                     </div>
                 </div>
@@ -240,7 +247,7 @@
             const emailInput = document.getElementById('email');
             const phoneInput = document.getElementById('phone');
             const collegeNameInput = document.getElementById('collegeName');
-            const yearInput = document.getElementById('year');
+            const semesterInput = document.getElementById('semester');
             const streamInput = document.getElementById('stream');
             const errorContainer = document.getElementById('error-container');
             const errorMessageEl = document.getElementById('error-message');
@@ -343,7 +350,7 @@
             }
 
             function startQuiz() {
-                if (!fullNameInput.value || !emailInput.value || !phoneInput.value || !collegeNameInput.value || !yearInput.value || !streamInput.value) {
+                if (!fullNameInput.value || !emailInput.value || !phoneInput.value || !collegeNameInput.value || !semesterInput.value || !streamInput.value) {
                     errorMessageEl.textContent = "Please fill out all fields.";
                     errorContainer.classList.remove('hidden');
                     return;
@@ -354,7 +361,7 @@
 
                 userData = { 
                     name: fullNameInput.value, email: emailInput.value, phone: phoneInput.value, 
-                    college: collegeNameInput.value, year: yearInput.value, stream: streamInput.value,
+                    college: collegeNameInput.value, year: semesterInput.value, stream: streamInput.value,
                     certificateNumber: generateCertificateNumber() 
                 };
 
