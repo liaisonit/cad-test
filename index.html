@@ -572,9 +572,21 @@
 
             function sendDataToBackend() {
                 const finalData = { ...userData, score: `${score}/${quizQuestions.length}` };
-                fetch(googleSheetWebAppUrl, { method: 'POST', mode: 'no-cors', cache: 'no-cache', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(finalData) })
-                  .then(() => console.log("Data sent successfully to Google Sheets."))
-                  .catch(err => console.error("Error sending data:", err));
+                fetch(googleSheetWebAppUrl, {
+  method: 'POST',
+  cache: 'no-cache',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(finalData)
+})
+.then(response => response.json()) // Now you can properly read the response
+.then(data => {
+  console.log("Success:", data); // Log the success message from your Apps Script
+})
+.catch(error => {
+  console.error("Error sending data:", error); // Catch any real errors
+});
             }
             
             async function generateCertificate() {
